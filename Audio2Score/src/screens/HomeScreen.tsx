@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 import { Button } from '../components/Button';
 import { useAuth } from '../context/AuthContext';
@@ -20,10 +21,10 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 export const HomeScreen = () => {
   const { user, logout } = useAuth();
 
-  // 👇 basic device check
+  // basic device check
   const isLargeScreen = SCREEN_WIDTH >= 768 || Platform.OS === 'web';
 
-  // 👇 choose background *image* and resize mode based on device
+  // choose background image and resize mode based on device
   const backgroundSource = isLargeScreen
     ? require('../../assets/wp5907462.webp')
     : require('../../assets/wp5907462.webp');
@@ -36,7 +37,7 @@ export const HomeScreen = () => {
       style={styles.background}
       resizeMode={imageResizeMode}
     >
-      <View style={[styles.overlay, isLargeScreen && styles.overlayLarge]}>
+      <SafeAreaView style={[styles.overlay, isLargeScreen && styles.overlayLarge]}>
         <ScrollView
           contentContainerStyle={styles.scroll}
           showsVerticalScrollIndicator={false}
@@ -83,8 +84,7 @@ export const HomeScreen = () => {
             <Button title="登出" onPress={logout} variant="outline" />
           </View>
         </ScrollView>
-        </SafeAreaView>
-      </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 };
@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     maxWidth: 300,
+    marginBottom: SPACING.xl,
   },
 });
 
